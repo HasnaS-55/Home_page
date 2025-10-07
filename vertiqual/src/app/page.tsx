@@ -276,9 +276,7 @@ export default function Page() {
       <ScrollReveal
   containerClassName="w-full"
   textClassName="text-[42px] text-[#1C4B24] font-medium whitespace-nowrap"
-  baseRotation={0}
-  baseY={0}
-  enableBlur={true}
+  
     // use h2 tag wrapper
 >
   La technologie est surtout <span className='underline decoration-solid underline-offset-8 decoration-5'>humaine.</span>
