@@ -278,23 +278,21 @@ export default function Page() {
   textClassName="text-[42px] text-[#1C4B24] font-medium whitespace-nowrap"
   baseRotation={0}
   baseY={0}
-  enableBlur={false}
+  enableBlur={true}
+  tag="h2"   // use h2 tag wrapper
 >
   La technologie est surtout <span className='underline decoration-solid underline-offset-8 decoration-5'>humaine.</span>
 </ScrollReveal>
 
-    </div>
-    <div className='w-flex flex-col  text-[#1C4B24] text-xl font-light leading-relaxed text-justify gap-6 '>
-      
-
+<div className='flex flex-col text-[#1C4B24] text-xl font-light leading-relaxed text-justify gap-6'>
   <ScrollReveal>
-    
-      <b>VertiQual®</b> s’engage pour un futur où la technologie sert l’humain et la planète.
-      <br />
-      Cela signifie que <b>l’IA</b> et nos outils n’ont qu’un objectif : accroître le discernement des experts et la valeur pour le terrain. 
-      <br />
-      Nous transformons des données vérifiables en recommandations claires, traçables et actionnables, pour passer de la <b>conformité</b> à la <b>performance</b>.
-    </ScrollReveal>
+    <b>VertiQual®</b> s’engage pour un futur où la technologie sert l’humain et la planète.
+    <br />
+    Cela signifie que <b>l’IA</b> et nos outils n’ont qu’un objectif : accroître le discernement des experts et la valeur pour le terrain. 
+    <br />
+    Nous transformons des données vérifiables en recommandations claires, traçables et actionnables, pour passer de la <b>conformité</b> à la <b>performance</b>.
+  </ScrollReveal>
+</div>
     <div className='w-[90%] bg-[#F1ECE5] h-[1px] mt-6'></div>
 
   

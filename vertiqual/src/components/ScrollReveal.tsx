@@ -6,7 +6,9 @@ import React, {
   useRef,
   useMemo,
   ReactNode,
-  RefObject
+  RefObject,
+  ReactElement,
+  ElementType
 } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -24,6 +26,7 @@ interface ScrollRevealProps {
   textClassName?: string
   rotationEnd?: string
   wordAnimationEnd?: string
+  tag?: keyof JSX.IntrinsicElements  // Optional wrapper tag
 }
 
 export default function ScrollReveal({
@@ -38,6 +41,7 @@ export default function ScrollReveal({
   textClassName = "",
   rotationEnd = "bottom bottom",
   wordAnimationEnd = "bottom bottom",
+  tag = "p",
 }: ScrollRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -60,7 +64,7 @@ export default function ScrollReveal({
     if (!el) return
     const scroller = scrollContainerRef?.current ?? window
 
-    // Rotate container
+    // Rotate container animation
     gsap.fromTo(
       el,
       { transformOrigin: "0% 50%", rotate: baseRotation },
@@ -77,17 +81,18 @@ export default function ScrollReveal({
       }
     )
 
-    // Animate words in
     const words = el.querySelectorAll<HTMLElement>(".word")
+
+    // Animate words: opacity, y-position, subtle skew with stagger
     gsap.fromTo(
       words,
-      { opacity: baseOpacity, y: baseY },
+      { opacity: baseOpacity, y: baseY, skewX: 3 },
       {
         opacity: 1,
         y: 0,
         skewX: 0,
         ease: "power1.out",
-        stagger: 0.05,
+        stagger: 0.1,
         scrollTrigger: {
           trigger: el,
           scroller,
@@ -98,7 +103,7 @@ export default function ScrollReveal({
       }
     )
 
-    // Optional blur removal
+    // Optional blur animation on words
     if (enableBlur) {
       gsap.fromTo(
         words,
@@ -130,7 +135,6 @@ export default function ScrollReveal({
     wordAnimationEnd,
   ])
 
-  // Global counter for unique keys
   let keyCounter = 0
 
   const wrapWords = (
@@ -138,7 +142,6 @@ export default function ScrollReveal({
     isBold = false,
     extraClasses = ""
   ): ReactNode[] => {
-    // 1. Text nodes
     if (typeof node === "string") {
       return node.split(/(\s+)/).map((word) =>
         word.match(/^\s*$/) ? (
@@ -154,43 +157,38 @@ export default function ScrollReveal({
       )
     }
 
-    // 2. React elements
     if (React.isValidElement(node)) {
-      // TS now knows node is ReactElement
-      type PropsWithClassAndChildren = { className?: string; children?: ReactNode };
-      const element = node as React.ReactElement<unknown>;
-      const props = element.props as PropsWithClassAndChildren;
-      // Handle bold tags
+      type PropsWithClassAndChildren = { className?: string; children?: ReactNode }
+      const element = node as React.ReactElement<unknown>
+      const props = element.props as PropsWithClassAndChildren
+
       if (element.type === "b") {
         return React.Children.toArray(props.children).flatMap((child) =>
           wrapWords(child, true, extraClasses)
         )
       }
-
-      // Handle span tags, preserve className
       if (element.type === "span") {
         const spanClasses: string = props.className ?? ""
         return React.Children.toArray(props.children).flatMap((child) =>
           wrapWords(child, isBold, `${extraClasses} ${spanClasses}`)
         )
       }
-
-      // Other elements: recurse into children
       return React.Children.toArray(props.children).flatMap((child) =>
         wrapWords(child, isBold, extraClasses)
       )
     }
 
-    // 3. Other node types
     return []
   }
+
+  const WrapperTag: ElementType = tag
 
   return (
     <div ref={containerRef} className={`space-y-5 ${containerClassName}`}>
       {paragraphs.map((paraNodes, pi) => (
-        <p key={`para-${pi}`} className={textClassName}>
+        <WrapperTag key={`para-${pi}`} className={textClassName}>
           {paraNodes.flatMap((node) => wrapWords(node))}
-        </p>
+        </WrapperTag>
       ))}
     </div>
   )
