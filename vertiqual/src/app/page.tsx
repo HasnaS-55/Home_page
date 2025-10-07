@@ -283,7 +283,7 @@ export default function Page() {
 >
   La technologie est surtout{" "}
   <span className="underline decoration-solid underline-offset-8 decoration-5">
-    humaine. Hiii
+    humaine
   </span>
 </ScrollReveal>
 
