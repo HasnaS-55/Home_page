@@ -81,7 +81,7 @@ export default function Header() {
 
         <Link
           href="/demo"
-          className="shiny-button text-base bg-[#1C4B24] hover:bg-green-700 text-white px-4 py-2 rounded-full font-regular transition-colors duration-200"
+          className="shiny-button text-base bg-[#1C4B24] hover:bg-green-800 text-white px-4 py-2 rounded-full font-regular transition-colors duration-200"
           style={{ ["--shine-delay" as string]: "0.8s" }}  /* delay this one */
         >
           Démo gratuite
