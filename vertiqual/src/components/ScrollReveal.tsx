@@ -26,7 +26,7 @@ interface ScrollRevealProps {
   textClassName?: string
   rotationEnd?: string
   wordAnimationEnd?: string
-  tag?: keyof JSX.IntrinsicElements  // Optional wrapper tag
+  tag?: string  // Changed from keyof JSX.IntrinsicElements to string
 }
 
 export default function ScrollReveal({
@@ -181,7 +181,7 @@ export default function ScrollReveal({
     return []
   }
 
-  const WrapperTag: ElementType = tag
+  const WrapperTag = tag as ElementType  // Use type assertion
 
   return (
     <div ref={containerRef} className={`space-y-5 ${containerClassName}`}>
