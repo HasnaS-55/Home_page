@@ -1,0 +1,303 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+/* Your existing root variables… */
+:root {
+  --background: #FCFDFB;
+  --foreground: #FCFDFB;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #FCFDFB;
+    --foreground: #FCFDFB;
+  }
+}
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Ensure hero is positioned and hides overflow */
+.hero-container {
+  @apply relative ;
+}
+
+/* Inject the lines CSS via Tailwind’s layer */
+.lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  margin: auto;
+  width: 90vw;
+}
+
+.line {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  top: 0;
+  background: #F1ECE54D; /* static line color */
+  overflow: hidden;
+}
+
+.line::after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 15vh;
+  width: 100%;
+  top: -50%;
+  left: 0;
+  background: linear-gradient(
+    to bottom, 
+    rgba(0, 128, 0, 0) 0%,
+    #61B989 75%,
+    #1C4B24 100%
+  );
+  animation: drop 12s infinite;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
+}
+
+/* Position each of the 8 lines evenly across width */
+.line:nth-child(1) { left: 0%; }
+.line:nth-child(2) { left: 14.28%; } /* 100/7 ≈ 14.28% spacing */
+.line:nth-child(3) { left: 28.57%; }
+.line:nth-child(4) { left: 42.86%; }
+.line:nth-child(5) { left: 57.14%; }
+.line:nth-child(6) { left: 71.43%; }
+.line:nth-child(7) { left: 85.71%; }
+.line:nth-child(8) { left: 100%; }
+
+/* Random animation delays for each line */
+.line:nth-child(1)::after { animation-delay: 0s; }
+.line:nth-child(2)::after { animation-delay: 2s; }
+.line:nth-child(3)::after { animation-delay: 4s; }
+.line:nth-child(4)::after { animation-delay: 6s; }
+.line:nth-child(5)::after { animation-delay: 8s; }
+.line:nth-child(6)::after { animation-delay: 10s; }
+.line:nth-child(7)::after { animation-delay: 12s; }
+.line:nth-child(8)::after { animation-delay: 14s; }
+
+@keyframes drop {
+  0% {
+    top: -50%;
+  }
+  100% {
+    top: 110%;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.logo-box {
+  z-index: 100;
+  background: #FCFDFB;
+  padding: 20px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* globals.css */
+.logo-box {
+  height: 100px; 
+  opacity: 0.6;
+  transition: opacity 0.8s ease-in-out; 
+}
+
+.logo-box.enter {
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out; 
+}
+
+.logo-box.blur {
+  
+  filter: blur(10px);
+  opacity: 1;
+  transition: filter 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+
+
+
+
+
+
+@keyframes vertical-carousel {
+  0% {
+    transform: translateY(100%);
+   
+    visibility: hidden;
+  }
+  10%, 25% {
+    transform: translateY(100%);
+    
+    visibility: visible;
+  }
+  28%, 50% {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  53%, 75% {
+    transform: translateY(-100%);
+   
+    visibility: visible;
+  }
+  78% {
+    transform: translateY(-100%);
+    
+    visibility: hidden;
+  }
+  100% {
+    transform: translateY(-100%);
+    
+    visibility: hidden;
+  }
+}
+
+
+
+
+
+
+
+
+/* Shiny text effect */
+@keyframes shiny-sweep {
+          0%   { left: -150%; }
+          50%  { left: 150%; }
+          100% { left: 150%; }
+        }
+        .shiny-button {
+          position: relative;
+          overflow: hidden;
+          isolation: isolate; /* keeps the shine inside the button */
+        }
+        .shiny-button::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -150%;
+          width: 150%;
+          height: 100%;
+          background: linear-gradient(
+            60deg,
+            rgba(255,255,255,0) 0%,
+            rgba(255,255,255,0.45) 50%,
+            rgba(255,255,255,0) 100%
+          );
+          transform: skewX(-25deg);
+          animation: shiny-sweep 2s ease-in-out infinite;
+          animation-delay: var(--shine-delay, 0s);
+          pointer-events: none;
+          z-index: 1;
+        }
+
+
+
+
+
+
+
+
+
+.animated-gradient-text {
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  max-width: fit-content;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1.25rem;
+  font-weight: 200;
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.5s ease-out;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: 300% 100%;
+  animation: gradient linear infinite;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.gradient-overlay::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: inherit;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #060010;
+  z-index: -1;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.text-content {
+  display: inline-block;
+  position: relative;
+  z-index: 2;
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient linear infinite;
+}
+
+
+
+
+
+
+
+
+
+
+
