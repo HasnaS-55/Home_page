@@ -81,7 +81,7 @@ export default function ScrollReveal({
     const words = el.querySelectorAll<HTMLElement>(".word")
     gsap.fromTo(
       words,
-      { opacity: baseOpacity, y: baseY},
+      { opacity: baseOpacity, y: baseY, skewX: 3 },
       {
         opacity: 1,
         y: 0,

@@ -280,7 +280,7 @@ export default function Page() {
   baseY={60}
   enableBlur={false}
 >
-  La technologie est surtout <span className='underline decoration-solid underline-offset-8 decoration-5'>humaine.</span>
+  La technologie est surtout <span className='underline decoration-solid underline-offset-8 decoration-5'>humaine. HIII</span>
 </ScrollReveal>
 
     </div>
