@@ -276,7 +276,7 @@ export default function Page() {
       <ScrollReveal
   containerClassName="w-full"
   textClassName="text-[42px] text-[#1C4B24] font-medium whitespace-nowrap"
-  baseRotation={3}
+  baseRotation={30}
   baseY={60}
   enableBlur={false}
 >
