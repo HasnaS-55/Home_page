@@ -279,7 +279,7 @@ export default function Page() {
   baseRotation={0}
   baseY={0}
   enableBlur={true}
-  tag="h2"   // use h2 tag wrapper
+    // use h2 tag wrapper
 >
   La technologie est surtout <span className='underline decoration-solid underline-offset-8 decoration-5'>humaine.</span>
 </ScrollReveal>
