@@ -81,12 +81,12 @@ export default function ScrollReveal({
     const words = el.querySelectorAll<HTMLElement>(".word")
     gsap.fromTo(
       words,
-      { opacity: baseOpacity, y: baseY, skewX: 0.01 },
+      { opacity: baseOpacity, y: baseY, skewX: 3 },
       {
         opacity: 1,
         y: 0,
         skewX: 0,
-        ease: "none",
+        ease: "power1.out",
         stagger: 0.05,
         scrollTrigger: {
           trigger: el,
@@ -105,8 +105,8 @@ export default function ScrollReveal({
         { filter: `blur(${blurStrength}px)` },
         {
           filter: "blur(0px)",
-          ease: "none",
-          stagger: 0.05,
+          ease: "power1.out",
+          stagger: 0.1,
           scrollTrigger: {
             trigger: el,
             scroller,
