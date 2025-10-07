@@ -279,7 +279,7 @@ export default function Page() {
   
     // use h2 tag wrapper
 >
-  La technologie est surtout <span className='underline decoration-solid underline-offset-8 decoration-5'>humaine.</span>
+  La technologie est surtout <span className='underline decoration-solid underline-offset-8 decoration-5'>humaine. Hiii</span>
 </ScrollReveal>
 
 <div className='flex flex-col text-[#1C4B24] text-xl font-light leading-relaxed text-justify gap-6'>
