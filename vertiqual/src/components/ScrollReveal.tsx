@@ -1,11 +1,12 @@
 // src/components/ScrollReveal.tsx
 "use client"
+
 import React, {
   useEffect,
   useRef,
   useMemo,
   ReactNode,
-  RefObject,
+  RefObject
 } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -59,6 +60,7 @@ export default function ScrollReveal({
     if (!el) return
     const scroller = scrollContainerRef?.current ?? window
 
+    // Rotate container
     gsap.fromTo(
       el,
       { transformOrigin: "0% 50%", rotate: baseRotation },
@@ -75,6 +77,7 @@ export default function ScrollReveal({
       }
     )
 
+    // Animate words in
     const words = el.querySelectorAll<HTMLElement>(".word")
     gsap.fromTo(
       words,
@@ -94,6 +97,7 @@ export default function ScrollReveal({
       }
     )
 
+    // Optional blur removal
     if (enableBlur) {
       gsap.fromTo(
         words,
@@ -126,14 +130,19 @@ export default function ScrollReveal({
   ])
 
   // Global counter for unique keys
-  // Global counter for unique keys
-let keyCounter = 0
-const wrapWords = (node: ReactNode, isBold = false, extraClasses = ""): ReactNode[] => {
-  if (typeof node === "string") {
-    return node.split(/(\s+)/).map((word) =>
-      word.match(/^\s*$/)
-        ? word
-        : (
+  let keyCounter = 0
+
+  const wrapWords = (
+    node: ReactNode,
+    isBold = false,
+    extraClasses = ""
+  ): ReactNode[] => {
+    // 1. Text nodes
+    if (typeof node === "string") {
+      return node.split(/(\s+)/).map((word) =>
+        word.match(/^\s*$/) ? (
+          word
+        ) : (
           <span
             className={`word ${isBold ? "font-bold" : ""} ${extraClasses}`}
             key={`word-${keyCounter++}`}
@@ -141,34 +150,45 @@ const wrapWords = (node: ReactNode, isBold = false, extraClasses = ""): ReactNod
             {word}
           </span>
         )
-    )
-  }
-  if (React.isValidElement(node) && node.type === "b") {
-    return React.Children.toArray(node.props.children).flatMap(child =>
-      wrapWords(child, true, extraClasses)
-    )
-  }
-  if (React.isValidElement(node) && node.type === "span") {
-    // Preserve the span's className and apply it to each word
-    const spanClasses = node.props.className || ""
-    return React.Children.toArray(node.props.children).flatMap(child =>
-      wrapWords(child, isBold, spanClasses)
-    )
-  }
-  if (React.isValidElement(node)) {
-    return React.Children.toArray(node.props.children).flatMap(child =>
-      wrapWords(child, isBold, extraClasses)
-    )
-  }
-  return []
-}
+      )
+    }
 
+    // 2. React elements
+    if (React.isValidElement(node)) {
+      // TS now knows node is ReactElement
+      type PropsWithClassAndChildren = { className?: string; children?: ReactNode };
+      const element = node as React.ReactElement<unknown>;
+      const props = element.props as PropsWithClassAndChildren;
+      // Handle bold tags
+      if (element.type === "b") {
+        return React.Children.toArray(props.children).flatMap((child) =>
+          wrapWords(child, true, extraClasses)
+        )
+      }
+
+      // Handle span tags, preserve className
+      if (element.type === "span") {
+        const spanClasses: string = props.className ?? ""
+        return React.Children.toArray(props.children).flatMap((child) =>
+          wrapWords(child, isBold, `${extraClasses} ${spanClasses}`)
+        )
+      }
+
+      // Other elements: recurse into children
+      return React.Children.toArray(props.children).flatMap((child) =>
+        wrapWords(child, isBold, extraClasses)
+      )
+    }
+
+    // 3. Other node types
+    return []
+  }
 
   return (
     <div ref={containerRef} className={`space-y-5 ${containerClassName}`}>
       {paragraphs.map((paraNodes, pi) => (
         <p key={`para-${pi}`} className={textClassName}>
-          {paraNodes.flatMap(node => wrapWords(node))}
+          {paraNodes.flatMap((node) => wrapWords(node))}
         </p>
       ))}
     </div>

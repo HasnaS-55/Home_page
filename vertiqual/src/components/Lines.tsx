@@ -1,6 +1,6 @@
 // src/components/Lines.tsx
 "use client"
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 
 export default function Lines() {
   const ref = useRef<HTMLDivElement>(null)

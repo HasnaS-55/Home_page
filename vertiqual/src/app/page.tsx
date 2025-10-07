@@ -138,7 +138,7 @@ export default function Page() {
     muted
     loop
     playsInline
-    loading="lazy"
+    preload="lazy"
   >
     <source src="/Animations/VertiQual-IA.webm" type="video/webm" />
   </video>
@@ -150,7 +150,7 @@ export default function Page() {
     muted
     loop
     playsInline
-    loading="lazy"
+    preload="lazy"
   >
     <source src="/Animations/aide-a-la-decision.webm" type="video/webm" />
   </video>
@@ -175,7 +175,7 @@ export default function Page() {
     muted
     loop
     playsInline
-    loading="lazy"
+    preload="lazy"
   >
     <source src="/Animations/Generer.webm" type="video/webm" />
   </video>
@@ -201,7 +201,7 @@ export default function Page() {
     muted
     loop
     playsInline
-    loading="lazy"
+    preload="lazy"
     style={{ objectPosition: '65% 10%' }} 
   >
     <source src="/Animations/VertiQual-360.webm" type="video/webm" />
