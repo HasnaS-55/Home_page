@@ -277,7 +277,7 @@ export default function Page() {
   containerClassName="w-full"
   textClassName="text-[42px] text-[#1C4B24] font-medium whitespace-nowrap"
   baseRotation={30}
-  baseY={60}
+  baseY={0}
   enableBlur={false}
 >
   La technologie est surtout <span className='underline decoration-solid underline-offset-8 decoration-5'>humaine.</span>
