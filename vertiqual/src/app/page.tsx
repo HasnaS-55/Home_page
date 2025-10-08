@@ -54,7 +54,7 @@ export default function Page() {
         delay={0}
         animateBy="lines"
         direction="bottom"
-        stepDuration={0.2}
+        stepDuration={0.5}
         className="text-[#1C4B24] font-thin text-[52px] leading-[70px]"
         onComplete={() => setShowSecond(true)}   // start the next once finished
       />
@@ -63,6 +63,7 @@ export default function Page() {
         <BlurText
           text={`Anticipez . Optimisez . Matérialisez`}
           delay={0}
+          stepDuration={0.5}
           animateBy="lines"
           direction="bottom"
           className="text-xl text-[#61B989] font-regular pt-4"
