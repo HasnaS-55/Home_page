@@ -63,7 +63,7 @@ export default function Page() {
         <BlurText
           text={`Anticipez . Optimisez . Matérialisez`}
           delay={100}
-          animateBy="words"
+          animateBy="lines"
           direction="bottom"
           className="text-xl text-[#61B989] font-regular pt-4"
           onComplete={() => setShowCards(true)}
@@ -82,7 +82,7 @@ export default function Page() {
     className="relative w-full h-96 justify-center flex items-center mt-6"
     initial={{ filter: "blur(12px)", opacity: 0, y: 150 }}
     animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-    transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
+    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
   >
     <CardSwap
       cardDistance={0}
