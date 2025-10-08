@@ -20,7 +20,7 @@ const foundersData: Founder[] = [
     title: "Co-Fondateur VertiQual®",
     desc: "Chez VertiQual®, notre engagement pour un avenir durable se traduit par des projets innovants, conçus et pilotés avec rigueur, expertise et passion. Nous croyons que la transition environnementale doit être à la fois ambitieuse et pragmatique.",
     linkedin: "/linkedin.svg",
-    linkedinUrl: "https://www.linkedin.com/in/mehdi-arif",
+    linkedinUrl: "https://www.linkedin.com/in/el-mehdi-arif-130b9b144/",
     highlight: true
   },
   {
@@ -29,7 +29,7 @@ const foundersData: Founder[] = [
     title: "CTO VertiQual®",
     desc: "Chez VertiQual®, notre engagement pour un avenir durable se traduit par des projets innovants, conçus et pilotés avec rigueur, expertise et passion. Nous croyons que la transition environnementale doit être à la fois ambitieuse et pragmatique.",
     linkedin: "/linkedin.svg",
-    linkedinUrl: "https://www.linkedin.com/in/sarah-martin",
+    linkedinUrl: "https://www.linkedin.com/in/clement-leroy78/",
     highlight: true
   },
   {
@@ -38,7 +38,7 @@ const foundersData: Founder[] = [
     title: "Directeur Innovation",
     desc: "Chez VertiQual®, notre engagement pour un avenir durable se traduit par des projets innovants, conçus et pilotés avec rigueur, expertise et passion. Nous croyons que la transition environnementale doit être à la fois ambitieuse et pragmatique.",
     linkedin: "/linkedin.svg",
-    linkedinUrl: "https://www.linkedin.com/in/pierre-dubois",
+    linkedinUrl: "https://www.linkedin.com/in/fran%C3%A7ois-isaac-guinsburg-08b076182/",
     highlight: true
   },
   {
@@ -47,16 +47,16 @@ const foundersData: Founder[] = [
     title: "Head of Sustainability",
     desc: "Chez VertiQual®, notre engagement pour un avenir durable se traduit par des projets innovants, conçus et pilotés avec rigueur, expertise et passion. Nous croyons que la transition environnementale doit être à la fois ambitieuse et pragmatique.",
     linkedin: "/linkedin.svg",
-    linkedinUrl: "https://www.linkedin.com/in/marie-laurent",
+    linkedinUrl: "https://www.linkedin.com/in/billel-maati-1764ab216/",
     highlight: true
   },
   {
     img: "/portrait5.jpg",
     name: "Nordine MESKOUR",
     title: "Data Scientist Senior",
-    desc: "Chez VertiQual®, notre engagement pour un avenir durable se traduit par des projets innovants, conçus et pilotés avec rigueur, expertise et passion. Nous croyons que la transition environnementale doit être à la fois ambitieuse et pragmatique.",
+    desc: "Chez VertiQual®,martin notre engagement pour un avenir durable se traduit par des projets innovants, conçus et pilotés avec rigueur, expertise et passion. Nous croyons que la transition environnementale doit être à la fois ambitieuse et pragmatique.",
     linkedin: "/linkedin.svg",
-    linkedinUrl: "https://www.linkedin.com/in/thomas-rousseau",
+    linkedinUrl: "https://www.linkedin.com/in/nordine-meskour-399985b4/",
     highlight: true
   },
 ]
