@@ -69,7 +69,7 @@ interface VerticalCarouselProps {
 
 export default function VerticalCarousel({
   items = foundersData,
-  duration = 3.5,
+  duration = 4.5,
   autoPlay = true
 }: VerticalCarouselProps) {
   const [isPaused, setIsPaused] = useState(false)
