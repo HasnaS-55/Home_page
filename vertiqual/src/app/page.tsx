@@ -276,7 +276,7 @@ export default function Page() {
             />
       <ScrollReveal
   containerClassName="w-full"
-  textClassName="text-[42px] text-[#1C4B24] font-medium"
+  textClassName="text-[42px] text-[#1C4B24] font-medium whitespace-nowrap"
   enableBlur={true}
   baseOpacity={0}              // start from 0 opacity
   baseY={20}                   // slide 20px up
