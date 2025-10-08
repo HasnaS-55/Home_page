@@ -14,8 +14,8 @@ const LogoGrid = () => {
   const [animateIn, setAnimateIn] = useState(true);
 
   useEffect(() => {
-    const showTime = 4000;
-    const blurTime = 1000;
+    const showTime = 1000;
+    const blurTime = 0;
 
     // Reset animation-in when new batch starts
     setAnimateIn(true);
