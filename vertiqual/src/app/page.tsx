@@ -54,7 +54,7 @@ export default function Page() {
         delay={0}
         animateBy="lines"
         direction="bottom"
-        stepDuration={100}
+        stepDuration={1}
         className="text-[#1C4B24] font-thin text-[52px] leading-[70px]"
         onComplete={() => setShowSecond(true)}   // start the next once finished
       />
