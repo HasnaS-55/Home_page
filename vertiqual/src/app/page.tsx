@@ -54,7 +54,7 @@ export default function Page() {
         delay={0}
         animateBy="lines"
         direction="bottom"
-        stepDuration={0.8}
+        stepDuration={0}
         className="text-[#1C4B24] font-thin text-[52px] leading-[70px]"
         onComplete={() => setShowSecond(true)}   // start the next once finished
       />
@@ -278,9 +278,12 @@ export default function Page() {
   containerClassName="w-full"
   textClassName="text-[42px] text-[#1C4B24] font-medium"
   enableBlur={true}
-  baseRotation={0}
-  baseY={0}
-  tag="h2"                   
+  baseOpacity={0}              // start from 0 opacity
+  baseY={20}                   // slide 20px up
+  blurStrength={8}
+  rotationEnd="bottom bottom"  // no rotation
+  wordAnimationEnd="bottom 50%"  
+  tag="h2"              
 >
   La technologie est surtout{" "}
   <span className="underline decoration-solid underline-offset-8 decoration-5">
