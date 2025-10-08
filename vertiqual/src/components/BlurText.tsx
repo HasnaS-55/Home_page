@@ -172,7 +172,7 @@ const BlurText: React.FC<BlurTextProps> = ({
                   key={`line-${lineIdx}-token-${tokenIdx}`}
                   style={{
                     fontWeight: hasBoldTags 
-                      ? (token.bold ? "600" : defaultFontWeight) 
+                      ? (token.bold ? "500" : defaultFontWeight) 
                       : "inherit", // Use className font weight when no bold tags
                   }}
                 >
@@ -237,8 +237,8 @@ const BlurText: React.FC<BlurTextProps> = ({
                 display: "inline-block",
                 willChange: "transform, filter, opacity",
                 fontWeight: hasBoldTags 
-                  ? (token.bold ? "600" : defaultFontWeight) 
-                  : "inherit", // Use className font weight when no bold tags
+                  ? (token.bold ? "500" : defaultFontWeight) 
+                  : "inherit", 
               }}
             >
               {display}
