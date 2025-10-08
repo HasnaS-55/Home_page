@@ -83,16 +83,22 @@ const buildKeyframes = (
   return keyframes
 }
 
+// Helper to extract font weight from className
+const extractFontWeight = (className: string): string => {
+  const fontWeightMatch = className.match(/font-(\w+)/)
+  return fontWeightMatch ? fontWeightMatch[1] : "normal"
+}
+
 const BlurText: React.FC<BlurTextProps> = ({
   text = "",
-  delay = 300,  // Increased default delay for line-by-line
+  delay = 300,
   className = "",
-  animateBy = "lines",  // Changed default to "lines"
+  animateBy = "lines",
   direction = "bottom",
   animationFrom,
   animationTo,
   easing = (t) => t,
-  stepDuration = 0.6,  // Increased duration for line animations
+  stepDuration = 0.6,
   startOnMount = true,
   onComplete,
 }) => {
@@ -126,6 +132,10 @@ const BlurText: React.FC<BlurTextProps> = ({
   )
 
   const tokens = tokenizeRichText(text)
+  
+  // Check if text contains bold tags
+  const hasBoldTags = /<b>.*?<\/b>/i.test(text)
+  const defaultFontWeight = extractFontWeight(className)
   
   // If animating by lines, group tokens into lines
   if (animateBy === "lines") {
@@ -161,7 +171,9 @@ const BlurText: React.FC<BlurTextProps> = ({
                 <span
                   key={`line-${lineIdx}-token-${tokenIdx}`}
                   style={{
-                    fontWeight: token.bold ? "semi-bold" : "",
+                    fontWeight: hasBoldTags 
+                      ? (token.bold ? "600" : defaultFontWeight) 
+                      : "inherit", // Use className font weight when no bold tags
                   }}
                 >
                   {token.value}
@@ -224,7 +236,9 @@ const BlurText: React.FC<BlurTextProps> = ({
               style={{
                 display: "inline-block",
                 willChange: "transform, filter, opacity",
-                fontWeight: token.bold ? "semi-bold" : "",
+                fontWeight: hasBoldTags 
+                  ? (token.bold ? "600" : defaultFontWeight) 
+                  : "inherit", // Use className font weight when no bold tags
               }}
             >
               {display}

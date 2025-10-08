@@ -180,7 +180,7 @@ export default function VerticalCarousel({
                   <p className={`text-[#61B989] transition-all ${rel === 0 ? "text-[14px]" : "text-[13px]"}`}>
                     {f.title}
                   </p>
-                  <p className={`text-[#1C4B24] leading-relaxed transition-all text-justify ${rel === 0 ? "text-[11.5px]" : "text-[11px]"}`}>
+                  <p className={`text-[#1C4B24] leading-relaxed transition-all text-justify z-10 ${rel === 0 ? "text-[11.5px]" : "text-[11px]"}`}>
                     {f.desc}
                   </p>
                 </div>
