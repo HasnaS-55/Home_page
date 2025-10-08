@@ -45,7 +45,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         backgroundPosition: "center",
         ...style
       }}
-      className={`absolute inset-0 mx-auto mt-[15%] rounded-xl [will-change:transform] [transform-style:preserve-3d] ${
+      className={`absolute inset-0 right-[50%] mx-auto mt-[15%] rounded-xl [will-change:transform] [transform-style:preserve-3d] ${
         customClass ?? ""
       }`.trim()}
     />

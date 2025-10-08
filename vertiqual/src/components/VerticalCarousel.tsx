@@ -158,11 +158,11 @@ export default function VerticalCarousel({
               <Image src={f.img} alt={f.name} width={190} height={190} className="object-cover w-full h-full" />
             </div>
             <div className="relative flex bg-white rounded-[15px] p-4">
-              <div className="absolute bottom-0 left-0 pointer-events-none">
+              <div className="absolute bottom-0 right-0 pointer-events-none">
     <Image 
       src="/overlay_logo.svg" 
       alt="" 
-      className="w-[0%] h-[80%] "
+      className="w-[80%] h-[80%] "
     />
   </div>
               <div className="flex justify-between h-full">
