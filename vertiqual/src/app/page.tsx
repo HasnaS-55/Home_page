@@ -236,7 +236,7 @@ export default function Page() {
       <div style={{ height: '70px', position: 'relative', overflow: 'hidden', backgroundColor: '#FCFDFB', width: '100vw', }} className="flex justify-center items-center">
       <LogoLoop
         logos={imageLogos}
-        speed={120}
+        speed={100}
         direction="left"
         logoHeight={48}
         gap={40}
