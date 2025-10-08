@@ -161,7 +161,7 @@ const BlurText: React.FC<BlurTextProps> = ({
                 <span
                   key={`line-${lineIdx}-token-${tokenIdx}`}
                   style={{
-                    fontWeight: token.bold ? "bold" : "",
+                    fontWeight: token.bold ? "medium" : "",
                   }}
                 >
                   {token.value}
@@ -224,7 +224,7 @@ const BlurText: React.FC<BlurTextProps> = ({
               style={{
                 display: "inline-block",
                 willChange: "transform, filter, opacity",
-                fontWeight: token.bold ? "bold" : "",
+                fontWeight: token.bold ? "medium" : "",
               }}
             >
               {display}
