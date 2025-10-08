@@ -82,7 +82,7 @@ const placeNow = (el: HTMLElement, slot: Slot, skew: number) =>
     z: slot.z,
     scale: slot.scale,
     xPercent: -50,
-    yPercent: -70,
+    yPercent: -20,
     skewY: skew,
     transformOrigin: "center center",
     zIndex: slot.zIndex,
