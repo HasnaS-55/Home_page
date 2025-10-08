@@ -54,7 +54,7 @@ export default function Page() {
         delay={0}
         animateBy="lines"
         direction="bottom"
-        stepDuration={0}
+        stepDuration={100}
         className="text-[#1C4B24] font-thin text-[52px] leading-[70px]"
         onComplete={() => setShowSecond(true)}   // start the next once finished
       />
@@ -300,7 +300,7 @@ export default function Page() {
     Nous transformons des données vérifiables en recommandations claires, traçables et actionnables, pour passer de la <b>conformité</b> à la <b>performance</b>.
   </ScrollReveal>
 </div>
-    <div className='w-[90%] bg-[#F1ECE5] h-[1px] mt-6'></div>
+    <div className='w-full bg-[#F1ECE5] h-[1px] mt-6'></div>
 
   
     </div>
