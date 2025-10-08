@@ -45,7 +45,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         backgroundPosition: "center",
         ...style
       }}
-      className={`absolute inset-0 right-[50%] mx-auto mt-[15%] rounded-xl [will-change:transform] [transform-style:preserve-3d] ${
+      className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-xl [will-change:transform] [transform-style:preserve-3d] ${
         customClass ?? ""
       }`.trim()}
     />
@@ -81,8 +81,8 @@ const placeNow = (el: HTMLElement, slot: Slot, skew: number) =>
     y: slot.y,
     z: slot.z,
     scale: slot.scale,
-    xPercent: 0,
-    yPercent: 0,
+    xPercent: -50,
+    yPercent: -50,
     skewY: skew,
     transformOrigin: "center center",
     zIndex: slot.zIndex,
