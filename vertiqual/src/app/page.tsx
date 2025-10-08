@@ -52,8 +52,9 @@ export default function Page() {
         text={`La plateforme de durabilité qui transforme <br />
                <b>conformité</b> en <b>performance.</b>`}
         delay={150}
-        animateBy="words"
+        animateBy="lines"
         direction="bottom"
+        stepDuration={0.8}
         className="text-[#1C4B24] font-thin text-[52px] leading-[70px]"
         onComplete={() => setShowSecond(true)}   // start the next once finished
       />

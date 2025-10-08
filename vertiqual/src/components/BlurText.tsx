@@ -5,9 +5,9 @@ import React, { useEffect, useMemo, useState } from "react"
 
 type BlurTextProps = {
   text?: string      // supports <b>…</b> and <br />
-  delay?: number     // ms between words/letters
+  delay?: number     // ms between lines
   className?: string
-  animateBy?: "words" | "letters"
+  animateBy?: "words" | "letters" | "lines"  // Added "lines" option
   direction?: "top" | "bottom"
   animationFrom?: Record<string, string | number>
   animationTo?: Array<Record<string, string | number>>
@@ -18,6 +18,10 @@ type BlurTextProps = {
 }
 
 type Token = { type: "text"; value: string; bold: boolean } | { type: "br" }
+
+type Line = {
+  tokens: Array<{ type: "text"; value: string; bold: boolean }>
+}
 
 const tokenizeRichText = (input: string): Token[] => {
   const normalized = input.replace(/<br\s*\/?>/gi, "<<<BR>>>")
@@ -40,6 +44,30 @@ const tokenizeRichText = (input: string): Token[] => {
   return tokens
 }
 
+// Group tokens into lines based on <br> tags
+const groupIntoLines = (tokens: Token[]): Line[] => {
+  const lines: Line[] = []
+  let currentLine: Line = { tokens: [] }
+  
+  tokens.forEach((token) => {
+    if (token.type === "br") {
+      if (currentLine.tokens.length > 0 || lines.length === 0) {
+        lines.push(currentLine)
+        currentLine = { tokens: [] }
+      }
+    } else {
+      currentLine.tokens.push(token)
+    }
+  })
+  
+  // Add the last line if it has content
+  if (currentLine.tokens.length > 0) {
+    lines.push(currentLine)
+  }
+  
+  return lines
+}
+
 const buildKeyframes = (
   from: Record<string, string | number>,
   steps: Array<Record<string, string | number>>
@@ -57,14 +85,14 @@ const buildKeyframes = (
 
 const BlurText: React.FC<BlurTextProps> = ({
   text = "",
-  delay = 150,
+  delay = 300,  // Increased default delay for line-by-line
   className = "",
-  animateBy = "words",
+  animateBy = "lines",  // Changed default to "lines"
   direction = "bottom",
   animationFrom,
   animationTo,
   easing = (t) => t,
-  stepDuration = 0.35,
+  stepDuration = 0.6,  // Increased duration for line animations
   startOnMount = true,
   onComplete,
 }) => {
@@ -98,8 +126,55 @@ const BlurText: React.FC<BlurTextProps> = ({
   )
 
   const tokens = tokenizeRichText(text)
+  
+  // If animating by lines, group tokens into lines
+  if (animateBy === "lines") {
+    const lines = groupIntoLines(tokens)
+    
+    return (
+      <div
+        className={`relative blur-text ${className}`}
+        style={{ textAlign: "center" }}
+      >
+        {lines.map((line, lineIdx) => {
+          const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots)
+          const lineTransition: Transition = {
+            duration: totalDuration,
+            times,
+            delay: (lineIdx * delay) / 1000,
+            ease: easing,
+          }
+          
+          return (
+            <motion.div
+              key={`line-${lineIdx}`}
+              initial={fromSnapshot}
+              animate={active ? animateKeyframes : fromSnapshot}
+              transition={lineTransition}
+              onAnimationComplete={lineIdx === lines.length - 1 ? onComplete : undefined}
+              style={{
+                display: "block",
+                willChange: "transform, filter, opacity",
+              }}
+            >
+              {line.tokens.map((token, tokenIdx) => (
+                <span
+                  key={`line-${lineIdx}-token-${tokenIdx}`}
+                  style={{
+                    fontWeight: token.bold ? "bold" : "normal",
+                  }}
+                >
+                  {token.value}
+                </span>
+              ))}
+            </motion.div>
+          )
+        })}
+      </div>
+    )
+  }
 
-  // find all animatable units
+  // Original word/letter-by-word logic for backward compatibility
   const unitsToAnimate: Array<{ tokenIdx: number; unitIdx: number }> = []
   tokens.forEach((token, tIdx) => {
     if (token.type === "br") return
@@ -115,7 +190,6 @@ const BlurText: React.FC<BlurTextProps> = ({
 
   let animIndex = 0
 
-  // render
   return (
     <div
       className={`relative blur-text ${className}`}
@@ -123,7 +197,6 @@ const BlurText: React.FC<BlurTextProps> = ({
     >
       {tokens.map((token, tIdx) => {
         if (token.type === "br") {
-          // force newline
           return <div key={`br-${tIdx}`} style={{ width: "100%", height: 0 }} />
         }
         const units =
@@ -151,7 +224,7 @@ const BlurText: React.FC<BlurTextProps> = ({
               style={{
                 display: "inline-block",
                 willChange: "transform, filter, opacity",
-                fontWeight: token.bold ? 400 : undefined,
+                fontWeight: token.bold ? "bold" : "normal",
               }}
             >
               {display}
