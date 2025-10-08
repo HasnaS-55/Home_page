@@ -51,11 +51,11 @@ export default function Page() {
         <BlurText
         text={`La plateforme de durabilité qui transforme <br />
                <b>conformité</b> en <b>performance.</b>`}
-        delay={150}
+        delay={0}
         animateBy="lines"
         direction="bottom"
         stepDuration={0.8}
-        className="text-[#1C4B24] font-thin text-[52px] leading-[70px]"
+        className="text-[#1C4B24] font-medium text-[52px] leading-[70px]"
         onComplete={() => setShowSecond(true)}   // start the next once finished
       />
 
@@ -82,12 +82,12 @@ export default function Page() {
     className="relative w-full h-96 justify-center flex items-center mt-6"
     initial={{ filter: "blur(12px)", opacity: 0, y: 150 }}
     animate={{ filter: "blur(0px)", opacity: 1, y: 0 }}
-    transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
   >
     <CardSwap
       cardDistance={0}
       verticalDistance={100}
-      delay={4000}
+      delay={3000}
       pauseOnHover={false}
       skewAmount={0}
       easing="elastic"
@@ -236,7 +236,7 @@ export default function Page() {
       <div style={{ height: '70px', position: 'relative', overflow: 'hidden', backgroundColor: '#FCFDFB', width: '100vw', }} className="flex justify-center items-center">
       <LogoLoop
         logos={imageLogos}
-        speed={10}
+        speed={80}
         direction="left"
         logoHeight={48}
         gap={40}
