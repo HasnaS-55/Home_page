@@ -62,7 +62,7 @@ export default function Page() {
       {showSecond && (
         <BlurText
           text={`Anticipez . Optimisez . Matérialisez`}
-          delay={100}
+          delay={0}
           animateBy="lines"
           direction="bottom"
           className="text-xl text-[#61B989] font-regular pt-4"
@@ -276,7 +276,7 @@ export default function Page() {
             />
       <ScrollReveal
   containerClassName="w-full"
-  textClassName="text-[42px] text-[#1C4B24] font-medium break-words"
+  textClassName="text-[42px] text-[#1C4B24] font-medium"
   enableBlur={true}
   baseRotation={0}
   baseY={0}
