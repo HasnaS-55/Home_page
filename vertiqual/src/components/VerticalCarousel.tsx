@@ -158,14 +158,16 @@ export default function VerticalCarousel({
               <Image src={f.img} alt={f.name} width={190} height={190} className="object-cover w-full h-full" />
             </div>
             <div className="relative flex bg-white rounded-[15px] p-4">
-              <div className="absolute bottom-0 right-0 pointer-events-none">
+              <div className="absolute -bottom-1 right-0 pointer-events-none">
     <Image 
       src="/overlay_logo.svg" 
       alt="" 
-      className="w-[80%] h-[80%] z-1"
+      className="w-[100%] h-[100%] z-1"
+      width={100}
+      height={100}
     />
   </div>
-              <div className="flex justify-between h-full">
+              <div className="flex justify-between h-full z-20">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                   <h3 className={`text-[#1C4B24] font-medium transition-all ${rel === 0 ? "text-[20px]" : "text-[18px]"}`}>
@@ -180,7 +182,7 @@ export default function VerticalCarousel({
                   <p className={`text-[#61B989] transition-all ${rel === 0 ? "text-[14px]" : "text-[13px]"}`}>
                     {f.title}
                   </p>
-                  <p className={`text-[#1C4B24] leading-relaxed transition-all text-justify z-10 ${rel === 0 ? "text-[11.5px]" : "text-[11px]"}`}>
+                  <p className={`text-[#1C4B24] leading-relaxed transition-all text-justify ${rel === 0 ? "text-[11.5px]" : "text-[11px]"}`}>
                     {f.desc}
                   </p>
                 </div>

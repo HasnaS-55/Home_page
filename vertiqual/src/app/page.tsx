@@ -1,7 +1,7 @@
 // src/app/page.tsx
 "use client"
 import Image from 'next/image';
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import { motion } from "motion/react"
 
 import Lines from '@/components/Lines'
@@ -16,7 +16,8 @@ import SvgScrollLoop from '@/components/SvgScrollLoop'
 import BlurText from '@/components/BlurText'
 import ScrollReveal from "@/components/ScrollReveal"
 import GradientText from '@/components/GradientText'
- 
+import { flushSync } from 'react-dom';
+
 
 
 
@@ -35,8 +36,8 @@ const imageLogos = [
   { src: "/Normes/12.svg", alt: "Company 3", href: "https://company3.com" },
 ];
 export default function Page() {
-  const [showSecond, setShowSecond] = useState(false);
-  const [showCards, setShowCards] = useState(false)
+  const [playSecond, setPlaySecond] = useState(false)
+const [showCards, setShowCards] = useState(false)
   return (
     <>
    
@@ -56,20 +57,23 @@ export default function Page() {
         direction="bottom"
         stepDuration={0.5}
         className="text-[#1C4B24] font-thin text-[52px] leading-[70px]"
-        onComplete={() => setShowSecond(true)}   // start the next once finished
+        onComplete={() => setPlaySecond(true)}   
+ 
+  // start the next once finished
       />
 
-      {showSecond && (
-        <BlurText
-          text={`Anticipez . Optimisez . Matérialisez`}
-          delay={0}
-          stepDuration={0.5}
-          animateBy="lines"
-          direction="bottom"
-          className="text-xl text-[#61B989] font-regular pt-4"
-          onComplete={() => setShowCards(true)}
-        />
-      )}
+      <BlurText
+  text={`Anticipez . Optimisez . Matérialisez`}
+  delay={0}                     // no stagger
+  stepDuration={0.3}
+  animateBy="lines"
+  direction="bottom"
+  className="text-xl text-[#61B989] font-regular pt-4"
+  startOnMount={false}          // mounted but idle
+  play={playSecond}             // animation starts the moment first completes
+  onComplete={() => setShowCards(true)}
+/>
+
           
         
         

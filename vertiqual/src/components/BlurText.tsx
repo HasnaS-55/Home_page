@@ -1,23 +1,38 @@
 // src/components/BlurText.tsx
 "use client"
+
 import { motion, Transition, Easing } from "motion/react"
 import React, { useEffect, useMemo, useState } from "react"
 
 type BlurTextProps = {
-  text?: string      // supports <b>…</b> and <br />
-  delay?: number     // ms between lines
+  /** Rich text string. Supports <b>…</b> and <br /> */
+  text?: string
+  /** Stagger between animated units (ms). Works for lines, words, or letters */
+  delay?: number
   className?: string
-  animateBy?: "words" | "letters" | "lines"  // Added "lines" option
+  /** Granularity of animation */
+  animateBy?: "words" | "letters" | "lines"
+  /** Direction for initial offset */
   direction?: "top" | "bottom"
+  /** Override initial keyframe props */
   animationFrom?: Record<string, string | number>
+  /** Override subsequent keyframe snapshots */
   animationTo?: Array<Record<string, string | number>>
+  /** Easing for the whole keyframe transition */
   easing?: Easing | Easing[]
-  stepDuration?: number  // seconds
+  /** Duration per step (seconds). Total = stepDuration * (#steps - 1) */
+  stepDuration?: number
+  /** Auto start when the component mounts */
   startOnMount?: boolean
+  /** Imperative trigger from parent. When true, animation plays immediately */
+  play?: boolean
+  /** Callback when the full sequence finishes */
   onComplete?: () => void
 }
 
-type Token = { type: "text"; value: string; bold: boolean } | { type: "br" }
+type Token =
+  | { type: "text"; value: string; bold: boolean }
+  | { type: "br" }
 
 type Line = {
   tokens: Array<{ type: "text"; value: string; bold: boolean }>
@@ -27,6 +42,7 @@ const tokenizeRichText = (input: string): Token[] => {
   const normalized = input.replace(/<br\s*\/?>/gi, "<<<BR>>>")
   const parts = normalized.split(/(<b>.*?<\/b>)/gi).filter(Boolean)
   const tokens: Token[] = []
+
   for (const part of parts) {
     if (/^<b>.*<\/b>$/i.test(part)) {
       const inner = part.replace(/^<b>/i, "").replace(/<\/b>$/i, "")
@@ -44,11 +60,10 @@ const tokenizeRichText = (input: string): Token[] => {
   return tokens
 }
 
-// Group tokens into lines based on <br> tags
 const groupIntoLines = (tokens: Token[]): Line[] => {
   const lines: Line[] = []
   let currentLine: Line = { tokens: [] }
-  
+
   tokens.forEach((token) => {
     if (token.type === "br") {
       if (currentLine.tokens.length > 0 || lines.length === 0) {
@@ -59,12 +74,11 @@ const groupIntoLines = (tokens: Token[]): Line[] => {
       currentLine.tokens.push(token)
     }
   })
-  
-  // Add the last line if it has content
+
   if (currentLine.tokens.length > 0) {
     lines.push(currentLine)
   }
-  
+
   return lines
 }
 
@@ -83,7 +97,6 @@ const buildKeyframes = (
   return keyframes
 }
 
-// Helper to extract font weight from className
 const extractFontWeight = (className: string): string => {
   const fontWeightMatch = className.match(/font-(\w+)/)
   return fontWeightMatch ? fontWeightMatch[1] : "normal"
@@ -100,13 +113,31 @@ const BlurText: React.FC<BlurTextProps> = ({
   easing = (t) => t,
   stepDuration = 0.6,
   startOnMount = true,
+  play = false,
   onComplete,
 }) => {
   const [active, setActive] = useState(false)
 
+  // Start automatically on mount if requested
   useEffect(() => {
     if (startOnMount) setActive(true)
   }, [startOnMount])
+
+  // External trigger to play
+  useEffect(() => {
+    if (play) {
+      setActive(true)
+    } else if (!startOnMount) {
+      // If parent turns play off and we are not auto-playing,
+      // reset to allow a new trigger later
+      setActive(false)
+    }
+  }, [play, startOnMount])
+
+  // If the text changes, reset when not auto-playing so the next play starts from initial
+  useEffect(() => {
+    if (!startOnMount && !play) setActive(false)
+  }, [text, startOnMount, play])
 
   const defaultFrom = useMemo(
     () =>
@@ -122,6 +153,7 @@ const BlurText: React.FC<BlurTextProps> = ({
     ],
     [direction]
   )
+
   const fromSnapshot = animationFrom ?? defaultFrom
   const toSnapshots = animationTo ?? defaultTo
 
@@ -132,20 +164,15 @@ const BlurText: React.FC<BlurTextProps> = ({
   )
 
   const tokens = tokenizeRichText(text)
-  
-  // Check if text contains bold tags
   const hasBoldTags = /<b>.*?<\/b>/i.test(text)
   const defaultFontWeight = extractFontWeight(className)
-  
-  // If animating by lines, group tokens into lines
+
+  // Animate by lines
   if (animateBy === "lines") {
     const lines = groupIntoLines(tokens)
-    
+
     return (
-      <div
-        className={`relative blur-text ${className}`}
-        style={{ textAlign: "center" }}
-      >
+      <div className={`relative blur-text ${className}`} style={{ textAlign: "center" }}>
         {lines.map((line, lineIdx) => {
           const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots)
           const lineTransition: Transition = {
@@ -154,14 +181,16 @@ const BlurText: React.FC<BlurTextProps> = ({
             delay: (lineIdx * delay) / 1000,
             ease: easing,
           }
-          
+
+          const isLast = lineIdx === lines.length - 1
+
           return (
             <motion.div
               key={`line-${lineIdx}`}
               initial={fromSnapshot}
               animate={active ? animateKeyframes : fromSnapshot}
               transition={lineTransition}
-              onAnimationComplete={lineIdx === lines.length - 1 ? onComplete : undefined}
+              onAnimationComplete={isLast ? onComplete : undefined}
               style={{
                 display: "block",
                 willChange: "transform, filter, opacity",
@@ -171,9 +200,11 @@ const BlurText: React.FC<BlurTextProps> = ({
                 <span
                   key={`line-${lineIdx}-token-${tokenIdx}`}
                   style={{
-                    fontWeight: hasBoldTags 
-                      ? (token.bold ? "500" : defaultFontWeight) 
-                      : "inherit", // Use className font weight when no bold tags
+                    fontWeight: hasBoldTags
+                      ? token.bold
+                        ? "500"
+                        : defaultFontWeight
+                      : "inherit",
                   }}
                 >
                   {token.value}
@@ -186,7 +217,7 @@ const BlurText: React.FC<BlurTextProps> = ({
     )
   }
 
-  // Original word/letter-by-word logic for backward compatibility
+  // Animate by words or letters
   const unitsToAnimate: Array<{ tokenIdx: number; unitIdx: number }> = []
   tokens.forEach((token, tIdx) => {
     if (token.type === "br") return
@@ -199,33 +230,31 @@ const BlurText: React.FC<BlurTextProps> = ({
     })
   })
   const lastIndex = unitsToAnimate.length - 1
-
   let animIndex = 0
 
   return (
-    <div
-      className={`relative blur-text ${className}`}
-      style={{ textAlign: "center" }}
-    >
+    <div className={`relative blur-text ${className}`} style={{ textAlign: "center" }}>
       {tokens.map((token, tIdx) => {
         if (token.type === "br") {
           return <div key={`br-${tIdx}`} style={{ width: "100%", height: 0 }} />
         }
         const units =
           animateBy === "words" ? token.value.split(/(\s+)/) : Array.from(token.value)
+
         return units.map((unit, uIdx) => {
           const display =
             unit === " " || unit === "\n" || unit === "\t" ? "\u00A0" : unit
           const shouldAnimate = !/^\s+$/.test(unit) && unit !== ""
           const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots)
+          const myIndex = shouldAnimate ? animIndex : -1
           const spanTransition: Transition = {
             duration: totalDuration,
             times,
             delay: (animIndex * delay) / 1000,
             ease: easing,
           }
-          const myIndex = shouldAnimate ? animIndex : -1
           if (shouldAnimate) animIndex++
+
           return (
             <motion.span
               key={`t${tIdx}-u${uIdx}`}
@@ -236,9 +265,11 @@ const BlurText: React.FC<BlurTextProps> = ({
               style={{
                 display: "inline-block",
                 willChange: "transform, filter, opacity",
-                fontWeight: hasBoldTags 
-                  ? (token.bold ? "500" : defaultFontWeight) 
-                  : "inherit", 
+                fontWeight: hasBoldTags
+                  ? token.bold
+                    ? "500"
+                    : defaultFontWeight
+                  : "inherit",
               }}
             >
               {display}
